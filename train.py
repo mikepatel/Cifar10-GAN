@@ -54,6 +54,59 @@ def generator_loss(generated_output):
     return generated_loss
 
 
+# generate and save images
+def generate_images(model, epoch, z_input, save_dir):
+    predictions = model(z_input, training=False)
+
+    for i in range(predictions.shape[0]):
+        plt.subplot(4, 4, i+1)
+        plt.imshow(predictions[i, :, :, 0] * 127.5 + 127.5)
+        plt.axis("off")
+
+    fig_name = os.path.join(save_dir, f'Epoch {epoch:06d}')
+    plt.savefig(fig_name)
+    plt.close()
+
+
+# training loop
+def train(dataset, d, g, d_optimizer, g_optimizer, z_input, save_dir):
+    for e in range(NUM_EPOCHS+1):
+        # get real images
+        idx = np.random.randint(0, len(dataset), size=BATCH_SIZE)
+        real_images = dataset[idx]
+
+        # generate noise
+        noise = tf.random.normal(shape=(BATCH_SIZE, NOISE_DIM))
+
+        # GradientTape
+        with tf.GradientTape() as g_tape, tf.GradientTape() as d_tape:
+            # generator
+            generated_image = g(noise)
+
+            # discriminator
+            real_output = d(real_images)
+            fake_output = d(generated_image)
+
+            # loss functions
+            g_loss = generator_loss(fake_output)
+            d_loss = discriminator_loss(real_output, fake_output)
+
+        # compute gradients recorded on "tape"
+        g_gradients = g_tape.gradient(g_loss, g.trainable_variables)
+        d_gradients = d_tape.gradient(d_loss, d.trainable_variables)
+
+        # apply gradients to model variables to minimize loss function
+        g_optimizer.apply_gradients(zip(g_gradients, g.trainable_variables))
+        d_optimizer.apply_gradients(zip(d_gradients, d.trainable_variables))
+
+        generate_images(
+            model=g,
+            epoch=e,
+            z_input=z_input,
+            save_dir=save_dir
+        )
+
+
 ################################################################################
 # Main
 if __name__ == "__main__":
@@ -103,3 +156,14 @@ if __name__ == "__main__":
     )
 
     # ----- TRAINING ----- #
+    z_input_gen = tf.random.normal(shape=(BATCH_SIZE, NOISE_DIM))
+
+    train(
+        dataset=train_images,
+        d=discriminator,
+        g=generator,
+        d_optimizer=discriminator_optimizer,
+        g_optimizer=generator_optimizer,
+        z_input=z_input_gen,
+        save_dir=output_dir
+    )

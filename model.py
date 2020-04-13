@@ -204,17 +204,17 @@ class Generator(tf.keras.Model):
 
         # Layer 3: Conv 1
         x = self.conv1(x)
-        x = self.batchnorm2(training=training)
+        x = self.batchnorm2(x, training=training)
         x = self.leaky2(x)
 
         # Layer 4: Conv 2
         x = self.conv2(x)
-        x = self.batchnorm3(training=training)
+        x = self.batchnorm3(x, training=training)
         x = self.leaky3(x)
 
         # Layer 5: Conv 3
         x = self.conv3(x)
-        x = self.batchnorm4(training=training)
+        x = self.batchnorm4(x, training=training)
         x = self.leaky4(x)
 
         # Layer 6: Conv 4
