@@ -19,6 +19,7 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 
 from parameters import *
+from model import Discriminator
 
 
 ################################################################################
@@ -47,3 +48,6 @@ if __name__ == "__main__":
     print(f'Shape of validation labels: {val_labels.shape}')
     print(f'Shape of test images: {test_images.shape}')
     print(f'Shape of test labels: {test_labels.shape}')
+
+    #
+    discriminator = Discriminator()
