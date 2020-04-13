@@ -19,7 +19,7 @@ class Discriminator(tf.keras.Model):
     def __init__(self):
         super(Discriminator, self).__init__()
 
-        # Conv 1: 32x32
+        # Conv 1: 32x32x64
         self.conv1 = tf.keras.layers.Conv2D(
             filters=64,
             kernel_size=(3, 3),
@@ -32,7 +32,7 @@ class Discriminator(tf.keras.Model):
         # Leaky 1
         self.leaky1 = tf.keras.layers.LeakyReLU()
 
-        # Conv 2: 16x16
+        # Conv 2: 16x16x128
         self.conv2 = tf.keras.layers.Conv2D(
             filters=128,
             kernel_size=(3, 3),
@@ -46,7 +46,7 @@ class Discriminator(tf.keras.Model):
         # Leaky 2
         self.leaky2 = tf.keras.layers.LeakyReLU()
 
-        # Conv 3: 8x8
+        # Conv 3: 8x8x128
         self.conv3 = tf.keras.layers.Conv2D(
             filters=128,
             kernel_size=(3, 3),
@@ -60,7 +60,7 @@ class Discriminator(tf.keras.Model):
         # Leaky 3
         self.leaky3 = tf.keras.layers.LeakyReLU()
 
-        # Conv 4: 4x4
+        # Conv 4: 4x4x256
         self.conv4 = tf.keras.layers.Conv2D(
             filters=256,
             kernel_size=(3, 3),
@@ -138,7 +138,7 @@ class Generator(tf.keras.Model):
             target_shape=(4, 4, 256)
         )
 
-        # Conv 1
+        # Conv 1: 8x8x128
         self.conv1 = tf.keras.layers.Conv2DTranspose(
             filters=128,
             kernel_size=(4, 4),
@@ -153,7 +153,7 @@ class Generator(tf.keras.Model):
         # Leaky 2
         self.leaky2 = tf.keras.layers.LeakyReLU()
 
-        # Conv 2
+        # Conv 2: 16x16x128
         self.conv2 = tf.keras.layers.Conv2DTranspose(
             filters=128,
             kernel_size=(4, 4),
@@ -168,7 +168,7 @@ class Generator(tf.keras.Model):
         # Leaky 3
         self.leaky3 = tf.keras.layers.LeakyReLU()
 
-        # Conv 3
+        # Conv 3: 32x32x128
         self.conv3 = tf.keras.layers.Conv2DTranspose(
             filters=128,
             kernel_size=(4, 4),
@@ -183,7 +183,7 @@ class Generator(tf.keras.Model):
         # Leaky 4
         self.leaky4 = tf.keras.layers.LeakyReLU()
 
-        # Conv 4
+        # Conv 4: 32x32x3
         self.conv4 = tf.keras.layers.Conv2DTranspose(
             filters=3,  # RGB
             kernel_size=(3, 3),

@@ -34,6 +34,8 @@ if __name__ == "__main__":
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
+    # ----- ETL ----- #
+    # ETL = Extraction, Transformation, Load
     (train_images, train_labels), (test_images, test_labels) = tf.keras.datasets.cifar10.load_data()
 
     # rescale images from [0, 255] to [-1, 1]
@@ -56,6 +58,17 @@ if __name__ == "__main__":
     print(f'Shape of test images: {test_images.shape}')
     print(f'Shape of test labels: {test_labels.shape}')
 
-    #
+    # ----- MODEL ----- #
     discriminator = Discriminator()
+    discriminator_optimizer = tf.keras.optimizers.Adam(
+        learning_rate=LEARNING_RATE,
+        beta_1=BETA_1
+    )
+
     generator = Generator()
+    generator_optimizer = tf.keras.optimizers.Adam(
+        learning_rate=LEARNING_RATE,
+        beta_1=BETA_1
+    )
+
+    # ----- TRAINING ----- #
