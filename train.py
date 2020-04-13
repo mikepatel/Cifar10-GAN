@@ -33,5 +33,17 @@ if __name__ == "__main__":
         os.makedirs(output_dir)
 
     (train_images, train_labels), (test_images, test_labels) = tf.keras.datasets.cifar10.load_data()
-    print(len(train_images))
-    print(len(test_images))
+
+    # create validation set
+    midpoint = int(len(test_images) / 2)
+    val_images = test_images[:midpoint]
+    val_labels = test_labels[:midpoint]
+    test_images = test_images[midpoint:]
+    test_labels = test_labels[midpoint:]
+
+    print(f'Shape of training images: {train_images.shape}')
+    print(f'Shape of training labels: {train_labels.shape}')
+    print(f'Shape of validation images: {val_images.shape}')
+    print(f'Shape of validation labels: {val_labels.shape}')
+    print(f'Shape of test images: {test_images.shape}')
+    print(f'Shape of test labels: {test_labels.shape}')
