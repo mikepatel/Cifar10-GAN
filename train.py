@@ -11,6 +11,7 @@ File description:
 ################################################################################
 # Imports
 import os
+import numpy as np
 from datetime import datetime
 import glob
 from PIL import Image
@@ -19,7 +20,7 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 
 from parameters import *
-from model import Discriminator
+from model import Discriminator, Generator
 
 
 ################################################################################
@@ -34,6 +35,12 @@ if __name__ == "__main__":
         os.makedirs(output_dir)
 
     (train_images, train_labels), (test_images, test_labels) = tf.keras.datasets.cifar10.load_data()
+
+    # rescale images from [0, 255] to [-1, 1]
+    train_images = (train_images.astype(np.float32) - 127.5) / 127.5
+    test_images = (test_images.astype(np.float32) - 127.5) / 127.5
+
+    # augment data set
 
     # create validation set
     midpoint = int(len(test_images) / 2)
@@ -51,3 +58,4 @@ if __name__ == "__main__":
 
     #
     discriminator = Discriminator()
+    generator = Generator()
