@@ -41,6 +41,9 @@ def build_discriminator():
     m.add(tf.keras.layers.BatchNormalization())
     m.add(tf.keras.layers.LeakyReLU(alpha=LEAKY_ALPHA))
 
+    # Layer : Dropout
+    m.add(tf.keras.layers.Dropout(rate=DROPOUT_RATE))
+
     # Layer 3: Conv: 8x8x128
     m.add(tf.keras.layers.Conv2D(
         filters=128,
@@ -60,6 +63,9 @@ def build_discriminator():
     ))
     m.add(tf.keras.layers.BatchNormalization())
     m.add(tf.keras.layers.LeakyReLU(alpha=LEAKY_ALPHA))
+
+    # Layer : Dropout
+    m.add(tf.keras.layers.Dropout(rate=DROPOUT_RATE))
 
     # Layer 5: Flatten
     m.add(tf.keras.layers.Flatten())
