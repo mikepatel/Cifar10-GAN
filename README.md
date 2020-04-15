@@ -11,6 +11,9 @@ A GAN using the Cifar-10 data set
 
 ## Instructions
 ### Train model
+```
+$ python train.py
+```
 
 ### Running model
 
