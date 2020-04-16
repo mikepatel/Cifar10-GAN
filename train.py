@@ -60,9 +60,13 @@ def generate_and_save_images(model, epoch, z_input, save_dir):
     predictions = model(z_input, training=False)
     predictions = predictions[:16]  # generate 16 images
 
+    # [-1, 1] to [0, 1]
+    predictions = (predictions + 1) / 2
+
     for i in range(predictions.shape[0]):
         plt.subplot(4, 4, i+1)
-        plt.imshow(predictions[i, :, :, 0] * 127.5) + 127.5
+        #plt.imshow(predictions[i, :, :, 0] * 127.5 + 127.5)
+        plt.imshow(predictions[i])
         plt.axis("off")
 
     fig_name = os.path.join(save_dir, f'Epoch {epoch:06d}')
@@ -129,6 +133,9 @@ if __name__ == "__main__":
     # rescale images from [0, 255] to [-1, 1]
     train_images = (train_images - 127.5) / 127.5
     #test_images = (test_images - 127.5) / 127.5
+
+    #plt.imshow(train_images[5])
+    #plt.show()
 
     # augment data set
 
