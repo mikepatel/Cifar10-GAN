@@ -18,3 +18,4 @@ $ python train.py
 ### Running model
 
 ## Results
+![training 300 epochs gif](https://github.com/mikepatel/Cifar10-GAN/blob/master/training.gif)
