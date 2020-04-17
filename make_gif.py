@@ -27,7 +27,7 @@ if __name__ == "__main__":
     filenames = glob.glob(image_files_pattern)
 
     # write all images to gif
-    with imageio.get_writer(gif_filename, mode="I", fps=0.8) as writer:  # 'I' for multiple images
+    with imageio.get_writer(gif_filename, mode="I", fps=1.0) as writer:  # 'I' for multiple images
         for f in filenames:
             image = imageio.imread(f)
             writer.append_data(image)
